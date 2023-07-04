@@ -5,7 +5,7 @@ export default function RootLayout() {
   return (
     <>
       <Header />
-      <main>
+      <main className='pt-16 h-screen overflow-y-auto'>
         <Outlet />
       </main>
     </>

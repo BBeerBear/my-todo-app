@@ -1,4 +1,4 @@
-import { Form } from 'react-router-dom';
+import { Form, Link } from 'react-router-dom';
 
 export default function TodoItem() {
   return (
@@ -16,6 +16,7 @@ export default function TodoItem() {
         </div>
         {/* button */}
         <div className='flex justify-center gap-2'>
+          <Link to='todos/1/edit'>Edit</Link>
           <Form
             method='post'
             action={`1/cmplete`}

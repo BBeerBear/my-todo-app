@@ -13,9 +13,24 @@ html {
     @apply bg-slate-800;
   }
   button {
-    @apply border rounded-xl p-2 uppercase text-sm hover:brightness-50;
+    @apply border rounded-xl p-2 uppercase text-sm hover:brightness-75;
+  }
+  label {
+    @apply flex flex-col gap-1 items-start w-full;
+  }
+  input {
+    @apply rounded-md p-2 font-normal w-full text-slate-700;
+  }
+  textarea {
+    @apply rounded-md text-slate-700 font-normal w-full p-2;
+  }
+  select {
+    @apply rounded-md text-slate-700 font-normal w-full p-2;
   }
   .splitter {
-    @apply h-[1px] bg-slate-100 my-2;
+    @apply h-[1px] bg-slate-100 my-2 w-full;
+  }
+  .circle_icon {
+    @apply rounded-full flex items-center justify-center;
   }
 }
