@@ -1,15 +1,15 @@
 from datetime import datetime, timedelta
 from typing import Annotated, Union
 
+from dependencies import (ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY,
+                          get_db)
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from jose import jwt
-from passlib.context import CryptContext
-from sqlalchemy.orm import Session
-
-from dependencies import ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY, get_db
 from models import Users
+from passlib.context import CryptContext
 from schemas import CreateUserRequest, Token
+from sqlalchemy.orm import Session
 
 router = APIRouter(
     prefix="/auth",
@@ -21,38 +21,38 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 db_dependency = Annotated[Session, Depends(get_db)]
 
 
-# authenticate the user
+# login
 def authenticate_user(db, username: str, password: str):
     user = db.query(Users).filter(Users.username == username).first()
     if not user:
         return False
-    if not pwd_context.verify(password, user.hashed_password):
+    if not pwd_context.verify(password, user.hashed_password):  # verify password
         return False
     return user
 
 
-# create access token
+# create jwt(access token)
 def create_access_token(
     username: str,
     user_id: int,
-    role: str,
+    user_role: str,
     expires_delta: Union[timedelta, None] = None,
 ):
     to_encode = {
         "sub": username,
         "id": user_id,
-        "role": role,
+        "role": user_role,
     }  # "sub" prevent same id, to differentiate differet id from different sub
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
     else:
-        expire = datetime.utcnow() + timedelta(minutes=15)
+        expire = datetime.utcnow() + timedelta(minutes=15)  # default
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
 
-# register user
+# register
 @router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_new_user(
     create_user_request: CreateUserRequest,
@@ -63,7 +63,9 @@ async def create_new_user(
         username=create_user_request.username,
         first_name=create_user_request.first_name,
         last_name=create_user_request.last_name,
-        hashed_password=pwd_context.hash(create_user_request.password),
+        hashed_password=pwd_context.hash(
+            create_user_request.password
+        ),  # hash the password
         phone_number=create_user_request.phone_number,
         is_active=True,
         role=create_user_request.role,
@@ -73,7 +75,7 @@ async def create_new_user(
     db.commit()
 
 
-# login to get the token
+# login for jwt
 @router.post("/token", response_model=Token)
 async def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: db_dependency

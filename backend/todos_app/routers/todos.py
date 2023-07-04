@@ -1,14 +1,10 @@
 from typing import Annotated
 
-from fastapi import Depends, APIRouter, HTTPException, Path, status
+from dependencies import get_current_user, get_db
+from fastapi import APIRouter, Depends, HTTPException, Path, status
 from models import Todos
 from schemas import TodoRequest
 from sqlalchemy.orm import Session
-
-from dependencies import get_db
-
-from dependencies import get_current_user
-
 
 router = APIRouter(
     prefix="/todos",
@@ -20,7 +16,7 @@ user_dependency = Annotated[dict, Depends(get_current_user)]
 db_dependency = Annotated[Session, Depends(get_db)]
 
 
-# Read all Todos
+# Read all Todos of the current user
 @router.get("/")
 async def read_all(user: user_dependency, db: db_dependency):
     return db.query(Todos).filter(Todos.owner_id == user.get("id")).all()

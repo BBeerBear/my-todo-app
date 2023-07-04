@@ -1,12 +1,11 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, status
-from passlib.context import CryptContext
-from sqlalchemy.orm import Session
-
 from dependencies import get_current_user, get_db
+from fastapi import APIRouter, Depends, HTTPException, status
 from models import Users
+from passlib.context import CryptContext
 from schemas import UserVerification
+from sqlalchemy.orm import Session
 
 router = APIRouter(
     prefix="/user", tags=["user"], dependencies=[Depends(get_current_user)]
