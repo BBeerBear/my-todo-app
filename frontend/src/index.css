@@ -13,7 +13,7 @@ html {
     @apply bg-slate-800;
   }
   button {
-    @apply border rounded-xl p-2 uppercase text-sm hover:brightness-75;
+    @apply border rounded-xl p-2 uppercase text-sm hover:brightness-90;
   }
   label {
     @apply flex flex-col gap-1 items-start w-full;
@@ -31,6 +31,6 @@ html {
     @apply h-[1px] bg-slate-100 my-2 w-full;
   }
   .circle_icon {
-    @apply rounded-full flex items-center justify-center;
+    @apply rounded-full flex items-center justify-center hover:brightness-90;
   }
 }

@@ -18,7 +18,7 @@ export default function RegisterForm() {
       </div>
       <input
         type='number'
-        id='email'
+        id='phone_number'
         name='phone_number'
         required
         placeholder='Phone Number'
@@ -38,7 +38,7 @@ export default function RegisterForm() {
       />
       <input
         type='password'
-        name='password'
+        name='verify_password'
         required
         placeholder='Verify your password'
       />

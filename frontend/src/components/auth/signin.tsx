@@ -35,7 +35,7 @@ export default function SignInForm() {
       <Link to='forget' className='text-slate-300 hover:underline'>
         Forgot password?
       </Link>
-      <Link to='?mode=login' className='text-slate-300 hover:underline'>
+      <Link to='?mode=register' className='text-slate-300 hover:underline'>
         "Don't have a account"
       </Link>
     </Form>

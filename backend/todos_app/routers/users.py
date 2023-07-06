@@ -17,7 +17,10 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 # return all information about the user that is currently logged in
-@router.get("/", status_code=status.HTTP_200_OK)
+@router.get(
+    "/me",
+    status_code=status.HTTP_200_OK,
+)
 async def get_user(user: user_dependency, db: db_dependency):
     return db.query(Users).filter(Users.id == user.get("id")).first()
 

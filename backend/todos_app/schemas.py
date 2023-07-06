@@ -8,6 +8,7 @@ class CreateUserRequest(BaseModel):
     first_name: str
     last_name: str
     password: str
+    verify_password: str
     phone_number: int
     role: str
 
@@ -19,8 +20,9 @@ class CreateUserRequest(BaseModel):
                 "first_name": "pigg",
                 "last_name": "cedy",
                 "password": "123456",
+                "verify_password": "123456",
                 "phone_number": 5139239823,
-                "role": "admin",
+                "role": "user",
             }
         }
 
