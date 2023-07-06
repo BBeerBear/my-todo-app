@@ -47,7 +47,12 @@ export const action: ActionFunction = async ({ request }) => {
         }
       );
       Cookies.set('user', JSON.stringify(userData));
+
+      return redirect('/');
     } catch (err: any) {
+      if (err.response.status == 422) {
+        return err;
+      }
       throw json(
         { message: err.response.data.detail },
         {
@@ -55,7 +60,6 @@ export const action: ActionFunction = async ({ request }) => {
         }
       );
     }
-    //login
   } else {
     //register
     try {
@@ -92,7 +96,9 @@ export const action: ActionFunction = async ({ request }) => {
 
       return redirect('/');
     } catch (err: any) {
-      console.log(err);
+      if (err.response.status == 422) {
+        return err.response.data;
+      }
       throw json(
         { message: err.response.data.detail },
         { status: err.response.status }

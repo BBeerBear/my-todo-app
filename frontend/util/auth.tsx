@@ -1,4 +1,5 @@
 import { ActionFunction, redirect } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 export function getTokenDuration() {
   const storedExpirationDate: any = localStorage.getItem('expiration');
@@ -18,19 +19,23 @@ export function getAuthToken() {
   }
   return token;
 }
-export function tokenLoader() {
-  const token = getAuthToken();
-  return token;
-}
-export function checkAuthLoader() {
+export function checkAuthLoaderInHome() {
   const token = getAuthToken();
   if (!token) {
     return redirect('/auth');
   }
-  return null;
+  return token;
 }
 export const logoutAction: ActionFunction = async () => {
   localStorage.removeItem('token');
   localStorage.removeItem('expiration');
+  Cookies.remove('user');
   return redirect('/');
 };
+export function checkAuthLoaderInAuth() {
+  const token = getAuthToken();
+  if (token) {
+    return redirect('/');
+  }
+  return null;
+}

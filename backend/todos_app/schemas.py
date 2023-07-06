@@ -28,10 +28,21 @@ class CreateUserRequest(BaseModel):
 
 
 class TodoRequest(BaseModel):
-    title: str = Field(min_length=3)
-    description: str = Field(min_length=3, max_length=100)
-    priority: int = Field(gt=0, lt=6)
+    title: str | None = Field()
+    description: str | None = Field()
+    priority: int | None = Field(gt=0, lt=6)
+    complete: bool | None
+
+
+class TodoResponse(BaseModel):
+    id: int
+    title: str
+    description: str
+    priority: int
     complete: bool
+
+    class Config:
+        orm_mode = True
 
 
 class Token(BaseModel):

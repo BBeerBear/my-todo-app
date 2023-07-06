@@ -4,7 +4,13 @@ type FormMethod = 'get' | 'post' | 'put' | 'delete' | 'patch';
 
 type Props = {
   method: FormMethod;
-  todoData?: { title: string; description: string; priority: number };
+  todoData?: {
+    id: number;
+    title: string;
+    description: string;
+    priority: number;
+    complete: boolean;
+  };
 };
 
 export default function TodoForm({ method, todoData }: Props) {
@@ -39,14 +45,13 @@ export default function TodoForm({ method, todoData }: Props) {
           id='description'
           name='description'
           rows={5}
-          required
           className='text-slate-700 font-normal'
           defaultValue={todoData?.description}
         />
       </label>
       <label htmlFor='priority'>
         Priority
-        <select name='priority' id='priority' value={todoData?.priority}>
+        <select name='priority' id='priority' defaultValue={todoData?.priority}>
           {priorityArray.map((priority) => (
             <option value='1' key={priority}>
               {priority}
@@ -54,11 +59,9 @@ export default function TodoForm({ method, todoData }: Props) {
           ))}
         </select>
       </label>
+      {/* button */}
       <div className='flex justify-between gap-3'>
-        <button
-          type='submit'
-          className='flex-1 mt-3 bg-gradient-to-r from-orange-500 to-red-500 p-3'
-        >
+        <button className='flex-1 mt-3 bg-gradient-to-r from-orange-500 to-red-500 p-3'>
           Save
         </button>
         <button

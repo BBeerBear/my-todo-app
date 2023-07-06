@@ -21,7 +21,7 @@ export default function Header() {
         to='/auth'
         className='rounded-md flex justify-center items-center hover:bg-slate-700 cursor-pointer px-5'
       >
-        Log In
+        Log Out
       </Link>
     </div>
   );

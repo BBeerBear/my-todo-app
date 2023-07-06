@@ -1,10 +1,11 @@
-import { Link, Form } from 'react-router-dom';
+import { Link, Form, useActionData } from 'react-router-dom';
 
 export default function RegisterForm() {
+  const data: any = useActionData();
   return (
-    <Form method='post' className='flex flex-col text-center gap-2'>
+    <Form method='post' className='flex flex-col text-center gap-3'>
       {/* header */}
-      <div className='uppercase font-extrabold tracking-wider'>Register</div>
+      <div className='uppercase font-extrabold tracking-wider'>Sign Up</div>
       <div className='splitter'></div>
       <input type='text' name='username' required placeholder='Username' />
       <div className='flex justify-between gap-3'>
@@ -42,9 +43,12 @@ export default function RegisterForm() {
         required
         placeholder='Verify your password'
       />
+      {data && data.detail && (
+        <div className='text-red-500'>Error: {data.detail}</div>
+      )}
       <button
         type='submit'
-        className='mt-2 mb-2 bg-gradient-to-r from-orange-300 to-red-400 border-none p-3 text-md font-extrabold rounded-md'
+        className='mt-1 mb-2 bg-gradient-to-r from-orange-300 to-red-400 border-none p-3 text-md font-extrabold rounded-md'
       >
         Register
       </button>

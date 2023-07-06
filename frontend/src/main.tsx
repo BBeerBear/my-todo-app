@@ -2,14 +2,22 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
 import { action as authAction } from './pages/auth';
-import { action as todoDeleteAction } from './pages/delete';
+import { todoDeleteAction } from '../util/todo';
 import ErrorPage from './pages/error-page';
 import HomePage from './pages/home';
 import { action as todoNewAction } from './pages/new-todo';
-import { loader as todoAllAction } from './pages/home';
+import { loader as todoAllLoader } from './pages/home';
+import {
+  action as todoEditAction,
+  loader as todoEditLoader,
+} from './pages/edit-todo';
 import RootLayout from './pages/root';
 
-import { logoutAction, tokenLoader } from '../util/auth';
+import {
+  logoutAction,
+  checkAuthLoaderInHome,
+  checkAuthLoaderInAuth,
+} from '../util/auth';
 import AuthPage from './pages/auth';
 import EditTodoPage from './pages/edit-todo';
 import NewTodoPage from './pages/new-todo';
@@ -21,9 +29,9 @@ const router = createBrowserRouter([
     path: '/',
     element: <RootLayout />,
     errorElement: <ErrorPage />,
-    loader: tokenLoader,
+    loader: checkAuthLoaderInHome,
     children: [
-      { index: true, element: <HomePage />, loader: todoAllAction },
+      { index: true, element: <HomePage />, loader: todoAllLoader },
       {
         path: 'todos',
         children: [
@@ -32,15 +40,25 @@ const router = createBrowserRouter([
             children: [
               { path: 'delete', action: todoDeleteAction },
               { path: 'complete' },
-              { path: 'edit', element: <EditTodoPage /> },
+              {
+                path: 'edit',
+                element: <EditTodoPage />,
+                loader: todoEditLoader,
+                action: todoEditAction,
+              },
             ],
           },
           { path: 'new', element: <NewTodoPage />, action: todoNewAction },
         ],
       },
-      { path: 'auth', element: <AuthPage />, action: authAction },
       { path: 'logout', action: logoutAction },
     ],
+  },
+  {
+    path: 'auth',
+    element: <AuthPage />,
+    loader: checkAuthLoaderInAuth,
+    action: authAction,
   },
 ]);
 

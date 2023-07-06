@@ -3,7 +3,7 @@ from typing import Annotated
 from dependencies import get_current_user, get_db
 from fastapi import APIRouter, Depends, HTTPException, Path, status
 from models import Todos
-from schemas import TodoRequest
+from schemas import TodoRequest, TodoResponse
 from sqlalchemy.orm import Session
 
 router = APIRouter(
@@ -23,7 +23,7 @@ async def read_all(user: user_dependency, db: db_dependency):
 
 
 # Get a Todo by its ID
-@router.get("/{todo_id}", status_code=status.HTTP_200_OK)
+@router.get("/{todo_id}", status_code=status.HTTP_200_OK, response_model=TodoResponse)
 async def read_todo(
     user: user_dependency, todo_id: Annotated[int, Path(gt=0)], db: db_dependency
 ):
@@ -50,7 +50,7 @@ async def create_todo(
 
 
 # Update a Todo
-@router.put("/{todo_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.patch("/{todo_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def update_todo(
     user: user_dependency,
     todo_id: Annotated[int, Path(gt=0)],

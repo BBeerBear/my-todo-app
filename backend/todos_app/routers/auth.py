@@ -74,18 +74,18 @@ def create_access_token(
 # register
 @router.post("/register", status_code=status.HTTP_201_CREATED, response_model=Token)
 async def create_new_user(create_user_request: CreateUserRequest, db: db_dependency):
-    validation1 = (
-        db.query(Users).filter(Users.username == create_user_request.username).first()
-    )
-    validation2 = (
-        db.query(Users).filter(Users.email == create_user_request.email).first()
-    )
     if (
-        create_user_request.password != create_user_request.verify_password
-        or validation1 is not None
-        or validation2 is not None
+        db.query(Users).filter(Users.username == create_user_request.username).first()
+        is not None
     ):
-        raise HTTPException(status_code=400, detail="Invalid registration request.")
+        raise HTTPException(status_code=422, detail="Username alreay exists.")
+    if (
+        db.query(Users).filter(Users.email == create_user_request.email).first()
+        is not None
+    ):
+        raise HTTPException(status_code=422, detail="Email alreay exists.")
+    if create_user_request.password != create_user_request.verify_password:
+        raise HTTPException(status_code=422, detail="Verify password is not the same.")
     create_user_model = create_user(db, create_user_request)
     access_token = create_access_token(
         create_user_model.username,
