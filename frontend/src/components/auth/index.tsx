@@ -9,7 +9,7 @@ export default function AuthForm() {
   return (
     <div className=''>
       <div className='fixed h-32 bg-gradient-to-b from-slate-950 to-slate-800 w-screen p-4 flex justify-between items-start text-2xl'>
-        <div className=''>Todo</div>
+        <div className=''>Todoarc</div>
         <div className='flex gap-2'>
           <Link to='?mode=signin'>
             <button className='border-none'>Sign in</button>

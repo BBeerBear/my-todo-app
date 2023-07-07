@@ -6,9 +6,9 @@ type Props = {
   method: FormMethod;
   todoData?: {
     id: number;
-    title: string;
-    description: string;
-    priority: number;
+    title?: string;
+    description?: string;
+    priority?: number;
     complete: boolean;
   };
 };
@@ -53,7 +53,7 @@ export default function TodoForm({ method, todoData }: Props) {
         Priority
         <select name='priority' id='priority' defaultValue={todoData?.priority}>
           {priorityArray.map((priority) => (
-            <option value='1' key={priority}>
+            <option value={priority} key={priority}>
               {priority}
             </option>
           ))}

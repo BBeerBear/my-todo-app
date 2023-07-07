@@ -3,7 +3,6 @@ from typing import Annotated
 from jose import JWTError, jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-from sqlalchemy.orm import Session
 
 SECRET_KEY = "0b447bf1378d32ca9b803e5aa6a1478e959eebc17ef65386f35c23bf1f872a96"
 ALGORITHM = "HS256"

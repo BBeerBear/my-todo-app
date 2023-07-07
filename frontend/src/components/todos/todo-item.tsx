@@ -21,10 +21,18 @@ export default function TodoItem({ todo }: Props) {
   useclickOutside(todoDetailPopup, () => {
     setOpenTodo(false);
   });
+
+  const prior_color = [
+    'text-green-500',
+    'text-blue-500',
+    'text-orange-500',
+    'text-red-500',
+    'text-red-700',
+  ];
   return !todo.complete ? (
     <>
       {openTodo && (
-        <div className='fixed top-0 left-0 right-0 bottom-0 bg-slate-900/75 z-[99]'>
+        <div className='fixed top-0 left-0 right-0 bottom-0 bg- bg-slate-900/75 z-[99]'>
           <div ref={todoDetailPopup}>
             <TodoDetail title={todo.title} description={todo.description} />
           </div>
@@ -32,11 +40,18 @@ export default function TodoItem({ todo }: Props) {
       )}
       <div className='bg-slate-600 rounded-md p-4 flex justify-between items-center'>
         {/* header */}
-        <div className='text-xl'>
-          {todo.title}(Priority: {todo.priority})
+        <div className='flex flex-col gap-2'>
+          <div
+            className={`text-sm ${
+              prior_color[todo.priority - 1]
+            } font-extrabold`}
+          >
+            Priority: {todo.priority}
+          </div>
+          <div className='text-xl'>{todo.title}</div>
         </div>
         <div className='flex items-center justify-center gap-3'>
-          {/* button */}
+          {/* edit todo */}
           <Link
             to={`todos/${todo.id}/edit`}
             className='circle_icon bg-gradient-to-br from-violet-400 to-sky-400 p-2'
@@ -56,10 +71,10 @@ export default function TodoItem({ todo }: Props) {
               />
             </svg>
           </Link>
-          {/* complete */}
+          {/* complete todo */}
           <Form
             method='post'
-            action={`1/complete`}
+            action={`todos/${todo.id}/complete`}
             onSubmit={(event) => {
               if (!confirm('Please confirm you want to complete this todo.')) {
                 event.preventDefault();

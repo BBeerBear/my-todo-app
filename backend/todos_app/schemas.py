@@ -28,17 +28,17 @@ class CreateUserRequest(BaseModel):
 
 
 class TodoRequest(BaseModel):
-    title: str | None = Field()
-    description: str | None = Field()
+    title: str | None
+    description: str | None
     priority: int | None = Field(gt=0, lt=6)
     complete: bool | None
 
 
 class TodoResponse(BaseModel):
     id: int
-    title: str
-    description: str
-    priority: int
+    title: str | None
+    description: str | None
+    priority: int | None
     complete: bool
 
     class Config:

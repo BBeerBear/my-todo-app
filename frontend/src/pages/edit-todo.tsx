@@ -3,7 +3,6 @@ import {
   LoaderFunction,
   json,
   redirect,
-  useActionData,
   useLoaderData,
 } from 'react-router-dom';
 import TodoForm from '../components/todos/todo-form';
